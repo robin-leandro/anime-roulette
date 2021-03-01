@@ -1,0 +1,24 @@
+
+DONE
+
+1. Set up Mongo thru Docker, create a DB and be able to access it
+    a. Choose doc schema
+    b. Populate some dummy data
+
+2. Node service to serve anime data
+    a. Randomly rolls for anime and episode
+
+3. Simple ass website that calls the node service and displays data
+
+PENDING
+
+4. Script to scrape data from wikipedia and populate mongo DB
+
+
+Enhancements:
+1. Filters for rolling: demographic, timeframe, other stuff?
+
+2. Better website (GL with that lmao)
+
+
+

@@ -1,0 +1,41 @@
+version: "3"
+
+services:
+  anro-mongo:
+    image: mongo:4.4-bionic
+    ports: 
+      - 5000:27017
+    volumes: 
+      - anro-mongo-data:/data/db
+    environment: 
+      MONGO_INITDB_ROOT_USERNAME: anro-admin
+      MONGO_INITDB_ROOT_PASSWORD: anro-pass
+    logging:
+      driver: "none" # Mongo pollutes the logs a fuck ton, remove this if need to see em
+    
+  anro-service:
+    image: node:14.16.0
+    working_dir: /home/anro-service
+    volumes:
+      - ./anro-service:/home/anro-service
+    expose: 
+      - 5001
+    ports: 
+      - 5001:5001
+    command: "npm start"
+    depends_on: 
+      - anro-mongo
+
+  anro-webapp:
+    build: ./anro-webapp
+    volumes: 
+      - ./anro-webapp:/home/anro-webapp
+    expose: 
+      - 5002
+    ports: 
+      - 80:5002
+    depends_on: 
+      - anro-service
+
+volumes: 
+  anro-mongo-data:
