@@ -1,6 +1,6 @@
 FROM node:14.16.0
 
-WORKDIR /home/anro-webapp
+WORKDIR /home/anro-service
 
 # add `/app/node_modules/.bin` to $PATH
 ENV PATH /app/node_modules/.bin:$PATH
@@ -14,4 +14,4 @@ COPY . /.
 
 CMD ["npm", "start"]
 
-EXPOSE 5002
+EXPOSE 5001

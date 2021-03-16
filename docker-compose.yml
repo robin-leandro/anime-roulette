@@ -14,15 +14,14 @@ services:
       driver: "none" # Mongo pollutes the logs a fuck ton, remove this if need to see em
     
   anro-service:
-    image: node:14.16.0
-    working_dir: /home/anro-service
+    build: ./anro-service
     volumes:
-      - ./anro-service:/home/anro-service
+      - ./anro-service:/home/anro-service # TODO make a dockerfile for this too so we can pull the same trick to ignore node_modules used in anro-webapp
+      - /home/anro-service/node_modules
     expose: 
       - 5001
     ports: 
       - 5001:5001
-    command: "npm start"
     depends_on: 
       - anro-mongo
 
@@ -30,6 +29,7 @@ services:
     build: ./anro-webapp
     volumes: 
       - ./anro-webapp:/home/anro-webapp
+      - /home/anro-webapp/node_modules # excludes node_modules
     expose: 
       - 5002
     ports: 
