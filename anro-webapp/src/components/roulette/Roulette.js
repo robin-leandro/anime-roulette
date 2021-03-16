@@ -16,15 +16,20 @@ class Roulette extends Component {
         const anime = this.state.rolledAnime
         
         if (anime) {
-            return (
+            if (anime.rolledEpisode) {
+                return (
+                    <div> 
+                        <p>Your anime is {anime.name}, episode #{anime.rolledEpisode}!</p>
+                        <button onClick={this.handleRoll}>Another spin?</button>
+                    </div>
+                )
+            } else return (
                 <div> 
-                    <p>Your anime is {anime.name}, episode #{anime.rolledEpisode}!</p>
-                    <p>Don't like it? Fuck you, the mighty wheel hath spokeneth</p>
+                    <p>Your anime is {anime.name}!</p>
+                    <button onClick={this.handleRoll}>Another spin?</button>
                 </div>
             )
-        }
-
-        return (
+        } else return (
             <div>
                 <button onClick={this.handleRoll}>Give it a spin!</button>
             </div>
