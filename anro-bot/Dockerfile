@@ -1,6 +1,6 @@
 FROM node:14.16.0
 
-WORKDIR /home/anro-service
+WORKDIR /home/anro-bot
 
 # add `/app/node_modules/.bin` to $PATH
 ENV PATH /app/node_modules/.bin:$PATH
@@ -12,9 +12,4 @@ RUN npm install --silent
 # Now copy the whole thing
 COPY . /.
 
-# Set up the DB with our nifty npm scripts
-RUN npm run setupDB
-
 CMD ["npm", "start"]
-
-EXPOSE 5001

@@ -10,9 +10,17 @@ DONE
 
 3. Simple ass website that calls the node service and displays data
 
-PENDING
 
 4. Script to scrape data from wikipedia and populate mongo DB
+
+5. Discord bot! Doesnt look that complex tbh 
+
+PENDING
+- Seed script assumes there's no more than 500 animes per year, should take a look to see if that assumption is true and implement a loop to get the next 500.
+
+- Improve script to also fetch wikipedia raw data per anime and pull info like episode count and demographic
+
+
 
 
 Enhancements:
@@ -22,3 +30,5 @@ Enhancements:
 
 
 
+Notes:
+- Bot invite link: https://discord.com/oauth2/authorize?client_id=821298929106026506&scope=bot&permissions=3072

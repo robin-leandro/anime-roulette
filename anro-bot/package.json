@@ -1,0 +1,20 @@
+{
+  "name": "anro-bot",
+  "version": "1.0.0",
+  "description": "Discord bot to generate random anime",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon --experimental-modules src/index.js"
+  },
+  "author": "Robin Leandro",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "discord.js": "^12.5.1",
+    "dotenv": "^8.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}

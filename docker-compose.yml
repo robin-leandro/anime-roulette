@@ -37,5 +37,13 @@ services:
     depends_on: 
       - anro-service
 
+  anro-bot:
+    build: ./anro-bot
+    volumes: 
+     - ./anro-bot:/home/anro-bot
+     - /home/anro-bot/node_modules # excludes node_modules
+    depends_on: 
+      - anro-service
+
 volumes: 
   anro-mongo-data:

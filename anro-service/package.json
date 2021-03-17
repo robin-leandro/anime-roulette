@@ -5,7 +5,10 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon --experimental-modules src/index.js"
+    "start": "nodemon --experimental-modules src/index.js",
+    "setupDB": "npm run dropDB && npm run createDB",
+    "dropDB": "node ./scripts/drop_anime_collection.js",
+    "createDB": "node ./scripts/create_anime_collection.js"
   },
   "author": "Robin Leandro",
   "license": "ISC",
