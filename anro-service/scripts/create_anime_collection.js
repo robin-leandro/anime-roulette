@@ -1,7 +1,7 @@
 import MongoClient from 'mongodb'
 import axios from 'axios'
 
-// Name of a Wikipedia subcategory that contains a list of subcategories of anime per year
+// Name of a Wikipedia category that contains a list of subcategories of anime per year
 // Each of these subcategories contains all the anime published that year
 // We'll use this to get the id of each year subcategory, and use those ids to get every anime ever documented in wikipedia
 const animeByYearsCategory = 'Category:Anime television series by year'
