@@ -12,9 +12,6 @@ RUN npm install --silent
 # Now copy the whole thing
 COPY . /.
 
-# Set up the DB with our nifty npm scripts
-RUN npm run setupDB
-
-CMD ["npm", "start"]
+CMD ["npm", "run", "start:seed"]
 
 EXPOSE 5001
