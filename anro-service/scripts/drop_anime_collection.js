@@ -5,11 +5,11 @@ console.log('Connecting to mongo...')
 const mongoConnString = 'mongodb://anro-admin:anro-pass@anro-mongo:27017/?appname=seed-script'
 const dbClient = await MongoClient.connect(mongoConnString, { useNewUrlParser: true, useUnifiedTopology: true })
 
-// Drop the database
-console.log('Dropping anime-roulette database...')
-await dbClient.db('anime-roulette').dropDatabase()
+// Drop anime-collection
+console.log('Dropping anime collection...')
+await dbClient.db('anime-roulette').dropCollection('anime')
 
 // End connection
-console.log('Anime databse dropped!\nClosing database connection...')
+console.log('anime collection dropped!\nClosing database connection...')
 dbClient.close()
 process.exit(0)

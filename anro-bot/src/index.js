@@ -11,9 +11,14 @@ client.once('ready', () => {
 })
 
 client.on('message', async message => {
-	if (message.content === `${prefix}randomAnime`) {
-        const response = await AnimeService.getRandomAnime()
-        message.channel.send(`Your anime is ${response.name}`)
+	if (message.content.split(' ')[0] === `${prefix}randomAnime`) {
+        console.log(`anime requested from user ${message.author.tag} in channel ${message.channel.toString()} in server ${message.channel.guild.id}`)
+        const rolledAnime = await AnimeService.getRandomAnime(message.author.tag, message.channel.toString(), message.channel.guild.id)
+        if(rolledAnime.wikipediaUrl) {
+            message.channel.send(`Your anime is ${rolledAnime.name}\nWikipedia link: ${rolledAnime.wikipediaUrl}`)
+        } else {
+            message.channel.send(`Your anime is ${rolledAnime.name}`)
+        }
     }
 })
 
