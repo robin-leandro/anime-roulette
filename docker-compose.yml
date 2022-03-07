@@ -25,17 +25,17 @@ services:
     depends_on: 
       - anro-mongo
 
-  anro-webapp:
-    build: ./anro-webapp
-    volumes: 
-      - ./anro-webapp:/home/anro-webapp
-      - /home/anro-webapp/node_modules # excludes node_modules
-    expose: 
-      - 5002
-    ports: 
-      - 80:5002
-    depends_on: 
-      - anro-service
+  # anro-webapp:
+  #   build: ./anro-webapp
+  #   volumes: 
+  #     - ./anro-webapp:/home/anro-webapp
+  #     - /home/anro-webapp/node_modules # excludes node_modules
+  #   expose: 
+  #     - 5002
+  #   ports: 
+  #     - 80:5002
+  #   depends_on: 
+  #     - anro-service
 
   anro-bot:
     build: ./anro-bot

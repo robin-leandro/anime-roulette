@@ -12,6 +12,6 @@ RUN npm install --silent
 # Now copy the whole thing
 COPY . /.
 
-CMD ["npm", "run", "start:seed"]
+CMD ["npm", "run", "start"]
 
 EXPOSE 5001

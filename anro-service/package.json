@@ -7,7 +7,7 @@
   "scripts": {
     "start": "nodemon --experimental-modules src/index.js",
     "start:seed": "npm run setupDB && nodemon --experimental-modules src/index.js",
-    "setupDB": "npm run dropDB && npm run createDB",
+    "setupDB": "npm run dropDB ; npm run createDB",
     "dropDB": "node ./scripts/drop_anime_collection.js",
     "createDB": "node ./scripts/create_anime_collection.js"
   },

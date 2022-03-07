@@ -1,36 +1,20 @@
 import MongoClient from 'mongodb'
 import axios from 'axios'
 
-// Name of a Wikipedia category that contains a list of subcategories of anime per year
-// Each of these subcategories contains all the anime published that year
-// We'll use this to get the id of each year subcategory, and use those ids to get every anime ever documented in wikipedia
-const animeByYearsCategory = 'Category:Anime television series by year'
 const wikipediaUrl = 'https://en.wikipedia.org/w/api.php'
+const yearCategoryTemplate = 'Category:{year}_anime_television_series_debuts‎' 
+const firstYear = 1961
+const lastYear = new Date().getFullYear();
+let years = []
+for(let year=firstYear; year<=lastYear; year++) years.push(year)
 
+const yearCategoryRequests = years.map(year => getCategoryMembersByTitle(yearCategoryTemplate.replace('{year}', year)))
+const awaitedRequests = await Promise.all(yearCategoryRequests)
 
-// Fetch all the items in the list Category:Animes by year (or whatever its fuckn called) 
-// This returns an array of subcategories (animes in year 1969, 1970, 1971, etc)
-console.log('Fetching anime data from Wikipedia...')
-const yearCategories = await getCategoryMembersByTitle(animeByYearsCategory)
-
-
-// Build an array containing axios promises 
-// Each promise will resolve into a response with all the members in each subcategory returned by the last call 
-const yearCategoryRequests = yearCategories.data.query.categorymembers
-    .flatMap(category => { return getCategoryMembersById(category.pageid)})
-
-// Await all the calls
-// TODO: BEWARE! All these calls right here are assuming that there's 500 anime or less each year.
-// Should do something about that at some point lol
-const allResponses = await Promise.all(yearCategoryRequests)
-
-// TODO: Here we could add an improvement to fetch the raw data for each pageid and parse it to obtain episode count etc.
-
-// Arrange them into neat lil docs with some sexy-ass javascript array handling
-const animeDocs = allResponses.flatMap(response => {
-    return Object.values(response.data.query.pages).flatMap(anime=>{return {name: anime.title, wikipediaUrl: anime.canonicalurl}}) 
-})
-console.log('Fetched some fuckin anime!!!! Have a random one:')
+const animeDocs = awaitedRequests.flatMap(yearCategory => Object.values(yearCategory.data.query.pages).map(anime => {
+    return {name: anime.title, wikipediaUrl: anime.canonicalurl}
+}))
+console.log(`Fetched ${animeDocs.length} fuckin anime!!!! Have a random one:`)
 console.log(animeDocs[Math.floor(Math.random() * animeDocs.length)])
 
 // Push to DB
@@ -51,26 +35,7 @@ process.exit(0)
 // Makes a call to the wikipedia API fetching all the children pages of a category by title
 function getCategoryMembersByTitle(title) {
     const params = {
-        format: 'json',
-        action: 'query',
-        list: 'categorymembers',
-        cmtitle: title,
-        cmprop: 'ids|title',
-        cmlimit: 500
-    }
-    return axios({method: 'get', url: wikipediaUrl, params: params})
-}
-
-// Makes a call to the wikipedia API fetching all the children pages of a category by id
-function getCategoryMembersById(id) {
-    const params = {
-        format: 'json',
-        action: 'query',
-        generator: 'categorymembers',
-        gcmpageid: id,
-        gcmlimit: 3,
-        prop: 'info',
-        inprop: 'url',
+        format: 'json', action: 'query', generator: 'categorymembers', gcmtitle: title, gcmlimit: 500, prop: 'info', inprop: 'url', 
     }
     return axios({method: 'get', url: wikipediaUrl, params: params})
 }

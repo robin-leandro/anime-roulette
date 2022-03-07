@@ -7,9 +7,13 @@ const dbClient = await MongoClient.connect(mongoConnString, { useNewUrlParser: t
 
 // Drop anime-collection
 console.log('Dropping anime collection...')
-await dbClient.db('anime-roulette').dropCollection('anime')
+try {
+    await dbClient.db('anime-roulette').dropCollection('anime')
+    console.log('anime collection dropped!\nClosing database connection...')
+} catch(e) {
+    console.log('collection not dropped, probably did not exist yet...')
+}
 
 // End connection
-console.log('anime collection dropped!\nClosing database connection...')
 dbClient.close()
 process.exit(0)
